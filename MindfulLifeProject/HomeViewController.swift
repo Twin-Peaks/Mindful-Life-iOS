@@ -13,13 +13,29 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var sitsButton: UIButton!
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+    var language:String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-//        TODO If you click on "Sits" button and you selected spanish, just open SitPlayerViewController programatically
+        
+        language = defaults.valueForKey("language") as! String
+
     }
     
-    func loadNextView() {
-        print("Clicked!")
+    
+    @IBAction func didClickSitsBtn(sender: AnyObject) {
+        if language == "english" {
+            if let sitsTableViewController = storyboard!.instantiateViewControllerWithIdentifier("SitsTableViewController") as? SitsTableViewController {
+                
+                self.navigationController?.pushViewController(sitsTableViewController, animated: true)
+            }
+        } else {
+            if let sitPlayerViewController = storyboard!.instantiateViewControllerWithIdentifier("SitPlayerViewController") as? SitPlayerViewController {
+                
+                self.navigationController?.pushViewController(sitPlayerViewController, animated: true)
+            }
+        }
+
     }
 
     override func didReceiveMemoryWarning() {

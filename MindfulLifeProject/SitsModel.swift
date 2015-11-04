@@ -19,18 +19,23 @@ struct Sits {
         let scUrl = "http://api.soundcloud.com/resolve?url=http://soundcloud.com/mindful-life-project&client_id=\(clientUrl)"
         
         Alamofire.request(.GET, scUrl, parameters: nil).responseJSON { response in
-            var json = JSON(response.result.value!)
-            let user_id = json["id"].stringValue
+            let result = response.result.isSuccess
+            var user_id = ""
+            if result {
+                var json = JSON(response.result.value!)
+                user_id = json["id"].stringValue
+            }
             
-            //            TODO Make sure the response is successful
             onComplete(user_id)
+            
+
         }
     }
     
-    func getPlaylistTitlesAndIds(onComplete: ([String:String]) -> Void) {
+    func getPlaylistTitlesAndIds(onComplete: ([String:String], Bool) -> Void) {
         var playlistTitlesDict: [String:String] = [:]
         getUserId { (user_id: String) -> Void in
-            
+
             // Retrieve ALL playlist data
             let scUrl = "https://api.soundcloud.com/users/\(user_id)/playlists?client_id=\(self.clientUrl)"
             Alamofire.request(.GET, scUrl, parameters: nil).responseJSON { response in
@@ -43,17 +48,40 @@ struct Sits {
                         }
                     }
                     /* Completion callback */
-                    onComplete(playlistTitlesDict)
+                    onComplete(playlistTitlesDict, true)
                 } else {
-                    print("ERROR getPlaylistTitlesAndIds")
+                    onComplete([:], false)
                 }
             }
         }
     }
-    //
-    func getTracksAndIdsFromPlaylist(playlistId: String, onComplete: (trackTitlesAndUrls: [String:String]) -> Void) {
+    
+    func getSpanishPlaylistId(onComplete: (String, Bool) -> Void) {
+        var playlistTitlesDict: [String:String] = [:]
+        getUserId { (user_id: String) -> Void in
+            
+            // Retrieve ALL playlist data
+            let scUrl = "https://api.soundcloud.com/users/\(user_id)/playlists?client_id=\(self.clientUrl)"
+            Alamofire.request(.GET, scUrl, parameters: nil).responseJSON { response in
+                if let data = response.result.value {
+                    let jsonArray = JSON(data)
+                    for playlist in jsonArray {
+                        let playlistTitle = playlist.1["title"].stringValue
+                        if playlistTitle == "Spanish Sits" {
+                            onComplete(playlist.1["id"].stringValue, true)
+                        }
+                    }
+                } else {
+                    onComplete("", false)
+                }
+            }
+        }
+    }
+    
+    func makeTrackAndIdsSCRequest(playlistId: String, onComplete: (urlsByTitle: [String:String], durationsByTitle: [String: String], result: Bool)-> Void) {
         let scUrl = "http://api.soundcloud.com/playlists/\(playlistId)?client_id=\(clientUrl)"
-        var trackTitlesAndUrls:[String:String] = [:]
+        var urlsByTitle:[String:String] = [:]
+        var durationsByTitle:[String:String] = [:]
         Alamofire.request(.GET, scUrl, parameters: nil).responseJSON { response in
             if let data = response.result.value {
                 let jsonArray = JSON(data)
@@ -62,21 +90,43 @@ struct Sits {
                         let trackTitle = track.1["title"].stringValue
                         let streamUrl = track.1["stream_url"].stringValue
                         let fullUrl = "\(streamUrl)?client_id=\(self.clientUrl)"
-
+                        let duration = track.1["duration"].stringValue
+                        
                         if trackTitle != "" {
-                            trackTitlesAndUrls.updateValue(fullUrl, forKey: trackTitle)
+                            urlsByTitle.updateValue(fullUrl, forKey: trackTitle)
+                            durationsByTitle.updateValue(duration, forKey: trackTitle)
                         }
                         
                     }
                 }
-                onComplete(trackTitlesAndUrls: trackTitlesAndUrls)
+                onComplete(urlsByTitle: urlsByTitle, durationsByTitle: durationsByTitle, result: true)
             } else {
-                print("ERROR getTracksFromPlaylist")
+                onComplete(urlsByTitle: urlsByTitle, durationsByTitle: durationsByTitle, result: false)
             }
         }
     }
     
-    init() {
+    func getTracksAndIdsFromPlaylist(playlistId: String, onComplete: (urlsByTitle: [String:String], durationsByTitle: [String:String], result: Bool) -> Void) {
         
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let language = defaults.valueForKey("language") as! String
+        
+        if language == "english" {
+            makeTrackAndIdsSCRequest(playlistId, onComplete: { urlsByTitle, durationsByTitle, result -> Void in
+                print("\(durationsByTitle)")
+                onComplete(urlsByTitle: urlsByTitle, durationsByTitle: durationsByTitle, result: true)
+            })
+        } else {
+            getSpanishPlaylistId { (spanishPlaylistId: String, result: Bool) -> Void in
+                if result {
+                    self.makeTrackAndIdsSCRequest(spanishPlaylistId, onComplete: { urlsByTitle, durationsByTitle, result -> Void in
+                        print("\(durationsByTitle)")
+                        onComplete(urlsByTitle: urlsByTitle, durationsByTitle: durationsByTitle, result: true)
+                    })
+                } else {
+                    onComplete(urlsByTitle: ["":""], durationsByTitle: ["":""], result: false)
+                }
+            }
+        }
     }
 }

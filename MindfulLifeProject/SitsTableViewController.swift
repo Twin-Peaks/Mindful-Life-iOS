@@ -15,10 +15,23 @@ class SitsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let sitsModel = Sits()
-        sitsModel.getPlaylistTitlesAndIds({ (resultDict:[String:String]) -> Void in
-            ////            Set the data source and reload the table view
-            self.playlistTitlesAndIds = resultDict
-            self.tableView.reloadData()
+        tableView.userInteractionEnabled = false
+        sitsModel.getPlaylistTitlesAndIds({ (resultDict:[String:String], result: Bool) -> Void in
+            if result {
+
+                self.playlistTitlesAndIds = resultDict
+                self.tableView.reloadData()
+                self.tableView.userInteractionEnabled = true
+            } else {
+                let alertController = UIAlertController(title: "No Internet Connection", message:
+                    "Connect to the internet to access sits", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                self.tableView.userInteractionEnabled = false
+                self.playlistTitlesAndIds = ["No Internet Connection":""]
+                self.tableView.reloadData()
+            }
         })
     }
     
@@ -95,8 +108,6 @@ class SitsTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        print("Selected")
-        print(self.tableView.indexPathForSelectedRow?.row)
         
         let playlistTitle = Array(playlistTitlesAndIds.keys)[(self.tableView.indexPathForSelectedRow?.row)!]
         let playlistId = Array(playlistTitlesAndIds.values)[(self.tableView.indexPathForSelectedRow?.row)!]

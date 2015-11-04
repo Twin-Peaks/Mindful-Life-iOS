@@ -7,52 +7,57 @@
 //
 
 import UIKit
+import AVKit
 import AVFoundation
 
 class SitPlayerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var togglePlay: UIButton!
+    @IBOutlet weak var activityMonitor: UIActivityIndicatorView!
+    
     var playerItem:AVPlayerItem!
     var player:AVPlayer!
+    
+    var trackUrl:String!
     
     var playlistTitleAndId:(title:String, id:String) = ("", "")
     var trackTitles:[String] = ["Loading..."]
     var trackUrls:[String] = []
+    var durations:[String] = []
     //    let clientUrl = "bc8400d9ccfc6ef41c9aca544ea5deb0"
     
     @IBOutlet weak var trackListTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.trackListTableView.userInteractionEnabled = false
         
-
-        
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let language = defaults.valueForKey("language")
-        
-        // playlistLabel.text = playlistTitleAndId.title
         trackListTableView.dataSource = self
         trackListTableView.delegate = self
         let sitsModel = Sits()
-        sitsModel.getTracksAndIdsFromPlaylist(playlistTitleAndId.id, onComplete: { trackTitlesAndUrls in
-            self.trackTitles = Array(trackTitlesAndUrls.keys)
-            self.trackListTableView.dataSource = self
-            self.trackListTableView.reloadData()
-            self.trackUrls = Array(trackTitlesAndUrls.values)
-            
-            // TODO  Make sure it's not empty
-            let firstStreamUrl = self.trackUrls[0]
-            let url = NSURL(string: firstStreamUrl)
-            self.playerItem = AVPlayerItem(URL: url!)
-            self.player = AVPlayer(playerItem: self.playerItem)
-            
-            let playerLayer = AVPlayerLayer(player: self.player)
-            playerLayer.frame =  CGRectMake(0, 0, 300, 50)
-            self.view.layer.addSublayer(playerLayer)
-            
-            
+        sitsModel.getTracksAndIdsFromPlaylist(playlistTitleAndId.id, onComplete: { urlsByTitle, durationsByTitle, result in
+            if result {
+                self.trackTitles = Array(urlsByTitle.keys)
+                self.trackListTableView.dataSource = self
+                self.trackUrls = Array(urlsByTitle.values)
+                self.durations = Array(durationsByTitle.values)
+
+                self.trackListTableView.reloadData()
+                self.trackListTableView.userInteractionEnabled = true
+            } else {
+                let alertController = UIAlertController(title: "No Internet Connection", message:
+                    "Connect to the internet to access sits", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                self.trackListTableView.userInteractionEnabled = false
+                self.trackTitles = ["No Internet Connection"]
+                self.trackListTableView.reloadData()
+            }
+
         })
     }
-
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -71,38 +76,102 @@ class SitPlayerViewController: UIViewController, UITableViewDataSource, UITableV
         return self.trackTitles.count
     }
     
+
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("track", forIndexPath: indexPath)
         var titlesArray = trackTitles
         let sit = titlesArray[indexPath.row]
         cell.textLabel?.text = sit
-        // Configure the cell...
+        var durationString = ""
         
+        if durations.count > 0 {
+            durationString = secondsToHoursMinutesSeconds(Int(durations[indexPath.row])!)
+        }
+        
+        cell.detailTextLabel?.text = durationString
+
+
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        authorLabel.text? = trackTitles[indexPath.row]
-        let trackUrl = NSURL(string: trackUrls[indexPath.row])
-        //        let newPlayerItem = AVPlayerItem(URL: trackUrl)
-        player.replaceCurrentItemWithPlayerItem(AVPlayerItem(URL: trackUrl!))
-        if(self.player.rate == 0) {
-            self.player.play()
-//            playButton.setTitle("PAUSE", forState: .Normal)
-        }
+        
+//        self.trackUrl = trackUrls[0]
+        
+
+//        let cell = tableView.cellForRowAtIndexPath(indexPath)
+//        let activityIndicator = UIActivityIndicatorView()
+//        cell?.accessoryView = activityIndicator
+//        activityIndicator.startAnimating()
+        
+//        self.updatePlayer(indexPath.row)
+    }
+    
+//    func initPlayer() {
+//        player = AVPlayer()
+//        trackListTableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: false, scrollPosition: UITableViewScrollPosition.None)
+//        
+//        
+//        let cell = trackListTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))
+//        let activityIndicator = UIActivityIndicatorView()
+//        cell?.accessoryView = activityIndicator
+//        
+//        let trackUrl = NSURL(string: trackUrls[0])
+//        let asset = AVAsset(URL: trackUrl!)
+//        
+//        asset.loadValuesAsynchronouslyForKeys(["duration"], completionHandler: { () -> Void in
+//            let tmpPlayerItem = AVPlayerItem(asset: asset)
+//            self.player.replaceCurrentItemWithPlayerItem(tmpPlayerItem)
+//            
+//            dispatch_async(dispatch_get_main_queue()) {
+//                let cell = self.trackListTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))
+//                let activityIndicator = cell?.accessoryView as! UIActivityIndicatorView
+//                activityIndicator.stopAnimating()
+//            }
+//        })
+//    }
+    
+//    func updatePlayer(index: Int) {
+//
+//        let trackUrl = NSURL(string: trackUrls[index])
+//        let asset = AVAsset(URL: trackUrl!)
+//        
+//        asset.loadValuesAsynchronouslyForKeys(["duration"], completionHandler: { () -> Void in
+//            let tmpPlayerItem = AVPlayerItem(asset: asset)
+//            self.player.replaceCurrentItemWithPlayerItem(tmpPlayerItem)
+//            self.player.play()
+//            
+//            dispatch_async(dispatch_get_main_queue()) {
+//                let cell = self.trackListTableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0))
+//                let activityIndicator = cell?.accessoryView as! UIActivityIndicatorView
+//                activityIndicator.stopAnimating()
+//            }
+//        })
+//    }
+    
+    func secondsToHoursMinutesSeconds (milliseconds : Int) -> String {
+        let totalSeconds = milliseconds / 1000
+        let m = (totalSeconds % 3600) / 60
+        let s = ((totalSeconds % 3600) % 60)
+        
+        return "\(m):\(s)"
+    }
+    
+
+    
+    @IBAction func didPressToggleBtn(sender: AnyObject) {
         
     }
     
-    @IBAction func toggleButton(sender: AnyObject) {
-        if player.rate == 0 {
-            self.player.play()
-//            playButton.setTitle("PAUSE", forState: .Normal)
-        } else {
-            self.player.pause()
-//            playButton.setTitle("PLAY", forState: .Normal)
-        }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let destination = segue.destinationViewController as! AVPlayerViewController
+        let index = trackListTableView.indexPathForSelectedRow?.row
+        let url = NSURL(string:
+            self.trackUrls[index!])
+        destination.player = AVPlayer(URL: url!)
+        destination.player!.play()
     }
-
 }
+
 
