@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		35CB76A49DD72BFB0ED78E1D /* Pods_MindfulLifeProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50587111A89719E512E3D288 /* Pods_MindfulLifeProject.framework */; };
+		510515401C19603800FF95F5 /* UIViewController+CheckinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5105153F1C19603800FF95F5 /* UIViewController+CheckinViewController.m */; };
 		B513984D1BCC832100CDCF02 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B513984C1BCC832100CDCF02 /* AVFoundation.framework */; };
 		B56AAF851BC9AA06004FC5BC /* SitsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56AAF841BC9AA06004FC5BC /* SitsTableViewController.swift */; };
 		B56AAF871BC9B8F9004FC5BC /* SitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56AAF861BC9B8F9004FC5BC /* SitsModel.swift */; };
@@ -45,6 +46,9 @@
 
 /* Begin PBXFileReference section */
 		50587111A89719E512E3D288 /* Pods_MindfulLifeProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindfulLifeProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5105153D1C19603700FF95F5 /* MindfulLifeProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MindfulLifeProject-Bridging-Header.h"; sourceTree = "<group>"; };
+		5105153E1C19603800FF95F5 /* UIViewController+CheckinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+CheckinViewController.h"; sourceTree = "<group>"; };
+		5105153F1C19603800FF95F5 /* UIViewController+CheckinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+CheckinViewController.m"; sourceTree = "<group>"; };
 		B513984C1BCC832100CDCF02 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B56AAF841BC9AA06004FC5BC /* SitsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SitsTableViewController.swift; sourceTree = "<group>"; };
 		B56AAF861BC9B8F9004FC5BC /* SitsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SitsModel.swift; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 				B56E37151BC1F5630017FA82 /* Products */,
 				033E74FDE560AA7B007B0047 /* Pods */,
 				7CA7C555BFFF0BE0F65B1197 /* Frameworks */,
+				5105153D1C19603700FF95F5 /* MindfulLifeProject-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,6 +146,8 @@
 		B56E37161BC1F5630017FA82 /* MindfulLifeProject */ = {
 			isa = PBXGroup;
 			children = (
+				5105153E1C19603800FF95F5 /* UIViewController+CheckinViewController.h */,
+				5105153F1C19603800FF95F5 /* UIViewController+CheckinViewController.m */,
 				B5ACA89A1C0A3F9700596F09 /* Description */,
 				B59C90F31BD19CA300A6264A /* Sits */,
 				B56E37171BC1F5630017FA82 /* AppDelegate.swift */,
@@ -258,6 +265,7 @@
 		B56E370C1BC1F5620017FA82 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Christopher Queen";
 				TargetAttributes = {
@@ -384,6 +392,7 @@
 				B56AAF871BC9B8F9004FC5BC /* SitsModel.swift in Sources */,
 				B59C90F21BD19BAA00A6264A /* SwiftyJSON.swift in Sources */,
 				B56E37181BC1F5630017FA82 /* AppDelegate.swift in Sources */,
+				510515401C19603800FF95F5 /* UIViewController+CheckinViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,10 +535,13 @@
 			baseConfigurationReference = D8A81E924AD01CA9C7122606 /* Pods-MindfulLifeProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = MindfulLifeProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.chris-queen.MindfulLifeProject";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MindfulLifeProject-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -538,10 +550,12 @@
 			baseConfigurationReference = BE43FC5D52B6DA86DDD1A852 /* Pods-MindfulLifeProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = MindfulLifeProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.chris-queen.MindfulLifeProject";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MindfulLifeProject-Bridging-Header.h";
 			};
 			name = Release;
 		};
