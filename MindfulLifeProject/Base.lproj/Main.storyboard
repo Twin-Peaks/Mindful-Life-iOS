@@ -98,15 +98,15 @@
         <!--Page View Controller-->
         <scene sceneID="Ch0-Bs-bYD">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="C1H-DG-ZdD" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="C1H-DG-ZdD" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KWj-xa-SD4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3551" y="-1169"/>
         </scene>
-        <!--View Controller-->
+        <!--Mindful Checkin View Controller-->
         <scene sceneID="ZBr-GZ-Asi">
             <objects>
-                <viewController id="Jd7-ma-5cY" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MindfulCheckinViewController" id="Jd7-ma-5cY" customClass="MindfulCheckinViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ioT-zS-zwJ"/>
                         <viewControllerLayoutGuide type="bottom" id="lhy-Gs-oWL"/>
@@ -121,10 +121,10 @@
             </objects>
             <point key="canvasLocation" x="2756" y="-433"/>
         </scene>
-        <!--View Controller-->
+        <!--Page Content View Controller-->
         <scene sceneID="6x9-6f-1Ie">
             <objects>
-                <viewController id="rqg-sl-HGa" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PageContentViewController" id="rqg-sl-HGa" customClass="PageContentViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Il7-ey-qRk"/>
                         <viewControllerLayoutGuide type="bottom" id="hX9-zo-Fay"/>
@@ -132,8 +132,22 @@
                     <view key="view" contentMode="scaleToFill" id="024-Wx-YHo">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pj9-Y9-lnk">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="pj9-Y9-lnk" firstAttribute="leading" secondItem="024-Wx-YHo" secondAttribute="leadingMargin" constant="-20" id="4XQ-nZ-U9p"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pj9-Y9-lnk" secondAttribute="trailing" constant="-20" id="N52-jf-eHQ"/>
+                            <constraint firstItem="hX9-zo-Fay" firstAttribute="top" secondItem="pj9-Y9-lnk" secondAttribute="bottom" id="Xe5-bJ-efd"/>
+                            <constraint firstItem="pj9-Y9-lnk" firstAttribute="top" secondItem="Il7-ey-qRk" secondAttribute="bottom" constant="-20" id="hLf-Ul-mcf"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="screenImage" destination="pj9-Y9-lnk" id="8Zm-ob-pxI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0tT-sI-8Sj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

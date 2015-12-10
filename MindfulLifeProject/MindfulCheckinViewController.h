@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PageContentViewController.h"
 
-@interface MindfulCheckinViewController : UIViewController
+@interface MindfulCheckinViewController : UIViewController <UIPageViewControllerDataSource>
+
+@property (nonatomic, strong) UIPageViewController *PageViewController;
+@property (nonatomic, strong) NSArray *arrayPageImages;
+
+- (PageContentViewController *)viewControllerAtIndex:(NSUInteger)index;
+
+
 
 @end

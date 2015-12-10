@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		35CB76A49DD72BFB0ED78E1D /* Pods_MindfulLifeProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50587111A89719E512E3D288 /* Pods_MindfulLifeProject.framework */; };
 		510515431C19637D00FF95F5 /* MindfulCheckinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 510515421C19637D00FF95F5 /* MindfulCheckinViewController.m */; };
+		510515461C1964A300FF95F5 /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 510515451C1964A300FF95F5 /* PageContentViewController.m */; };
 		B513984D1BCC832100CDCF02 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B513984C1BCC832100CDCF02 /* AVFoundation.framework */; };
 		B56AAF851BC9AA06004FC5BC /* SitsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56AAF841BC9AA06004FC5BC /* SitsTableViewController.swift */; };
 		B56AAF871BC9B8F9004FC5BC /* SitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56AAF861BC9B8F9004FC5BC /* SitsModel.swift */; };
@@ -46,9 +47,11 @@
 
 /* Begin PBXFileReference section */
 		50587111A89719E512E3D288 /* Pods_MindfulLifeProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindfulLifeProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5105153D1C19603700FF95F5 /* MindfulLifeProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MindfulLifeProject-Bridging-Header.h"; sourceTree = "<group>"; };
+		5105153D1C19603700FF95F5 /* MindfulLifeProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MindfulLifeProject-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		510515411C19637D00FF95F5 /* MindfulCheckinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MindfulCheckinViewController.h; path = MindfulLifeProject/MindfulCheckinViewController.h; sourceTree = "<group>"; };
 		510515421C19637D00FF95F5 /* MindfulCheckinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MindfulCheckinViewController.m; path = MindfulLifeProject/MindfulCheckinViewController.m; sourceTree = "<group>"; };
+		510515441C1964A300FF95F5 /* PageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageContentViewController.h; path = MindfulLifeProject/PageContentViewController.h; sourceTree = "<group>"; };
+		510515451C1964A300FF95F5 /* PageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PageContentViewController.m; path = MindfulLifeProject/PageContentViewController.m; sourceTree = "<group>"; };
 		B513984C1BCC832100CDCF02 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B56AAF841BC9AA06004FC5BC /* SitsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SitsTableViewController.swift; sourceTree = "<group>"; };
 		B56AAF861BC9B8F9004FC5BC /* SitsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SitsModel.swift; sourceTree = "<group>"; };
@@ -111,6 +114,40 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		510515471C19730D00FF95F5 /* Objective-C Classes */ = {
+			isa = PBXGroup;
+			children = (
+				510515441C1964A300FF95F5 /* PageContentViewController.h */,
+				510515451C1964A300FF95F5 /* PageContentViewController.m */,
+				510515411C19637D00FF95F5 /* MindfulCheckinViewController.h */,
+				510515421C19637D00FF95F5 /* MindfulCheckinViewController.m */,
+			);
+			name = "Objective-C Classes";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		510515481C19732C00FF95F5 /* Swift Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B5ACA89A1C0A3F9700596F09 /* Description */,
+				B59C90F31BD19CA300A6264A /* Sits */,
+				B56E37171BC1F5630017FA82 /* AppDelegate.swift */,
+				B59C90F81BD1ADB500A6264A /* LanguageSelectViewController.swift */,
+				B56E37191BC1F5630017FA82 /* HomeViewController.swift */,
+				B59C90F61BD1A78000A6264A /* ContentModel.swift */,
+				B59C90F11BD19BAA00A6264A /* SwiftyJSON.swift */,
+			);
+			name = "Swift Classes";
+			sourceTree = "<group>";
+		};
+		510515491C19734400FF95F5 /* Bridging-Header */ = {
+			isa = PBXGroup;
+			children = (
+				5105153D1C19603700FF95F5 /* MindfulLifeProject-Bridging-Header.h */,
+			);
+			name = "Bridging-Header";
+			sourceTree = "<group>";
+		};
 		7CA7C555BFFF0BE0F65B1197 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,9 +160,6 @@
 		B56E370B1BC1F5620017FA82 = {
 			isa = PBXGroup;
 			children = (
-				5105153D1C19603700FF95F5 /* MindfulLifeProject-Bridging-Header.h */,
-				510515411C19637D00FF95F5 /* MindfulCheckinViewController.h */,
-				510515421C19637D00FF95F5 /* MindfulCheckinViewController.m */,
 				B56E37161BC1F5630017FA82 /* MindfulLifeProject */,
 				B56E372B1BC1F5630017FA82 /* MindfulLifeProjectTests */,
 				B56E37361BC1F5630017FA82 /* MindfulLifeProjectUITests */,
@@ -148,13 +182,9 @@
 		B56E37161BC1F5630017FA82 /* MindfulLifeProject */ = {
 			isa = PBXGroup;
 			children = (
-				B5ACA89A1C0A3F9700596F09 /* Description */,
-				B59C90F31BD19CA300A6264A /* Sits */,
-				B56E37171BC1F5630017FA82 /* AppDelegate.swift */,
-				B59C90F81BD1ADB500A6264A /* LanguageSelectViewController.swift */,
-				B56E37191BC1F5630017FA82 /* HomeViewController.swift */,
-				B59C90F61BD1A78000A6264A /* ContentModel.swift */,
-				B59C90F11BD19BAA00A6264A /* SwiftyJSON.swift */,
+				510515471C19730D00FF95F5 /* Objective-C Classes */,
+				510515491C19734400FF95F5 /* Bridging-Header */,
+				510515481C19732C00FF95F5 /* Swift Classes */,
 				B56E371B1BC1F5630017FA82 /* Main.storyboard */,
 				B56E37201BC1F5630017FA82 /* LaunchScreen.storyboard */,
 				B56E371E1BC1F5630017FA82 /* Assets.xcassets */,
@@ -387,6 +417,7 @@
 				B59C90F71BD1A78000A6264A /* ContentModel.swift in Sources */,
 				B5ACA89E1C0A416D00596F09 /* DescriptionViewController.swift in Sources */,
 				B59C90F51BD1A21600A6264A /* SitPlayerViewController.swift in Sources */,
+				510515461C1964A300FF95F5 /* PageContentViewController.m in Sources */,
 				B56AAF851BC9AA06004FC5BC /* SitsTableViewController.swift in Sources */,
 				510515431C19637D00FF95F5 /* MindfulCheckinViewController.m in Sources */,
 				B56E371A1BC1F5630017FA82 /* HomeViewController.swift in Sources */,
